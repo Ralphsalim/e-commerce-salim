@@ -1,0 +1,24 @@
+{
+  "name": "e-commerce-salim",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "16.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd server && npm install && npm start",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ralphsalim/e-commerce-salim.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ralphsalim/e-commerce-salim/issues"
+  },
+  "homepage": "https://github.com/Ralphsalim/e-commerce-salim#readme"
+}
