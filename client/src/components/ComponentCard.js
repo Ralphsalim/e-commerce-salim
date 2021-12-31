@@ -8,14 +8,11 @@ export const ComponentCard = (props) => {
     display: "flex",
     justifyContent: " center",
     alignItems: "center",
-    flex: "1",
-    marginLeft: "20px",
     backgroundColor: "black",
     color: "white",
     cursor: "pointer",
     fontSize: "18px",
     height: "60px",
-    maxWidth: "300px",
   };
   styles = { ...styles, ...style };
 

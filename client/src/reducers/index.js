@@ -7,6 +7,7 @@ import overlayReducer from "./overlayReducer";
 import updateCartTotalas from "./cartTotalsReducers";
 import cartTotalsReducers from "./cartTotalsReducers";
 import clientSecretReducer from "./clientSecretReducer";
+import Collapsablereducer from "./collapsableReducer";
 
 const allReducers = combineReducers({
   favorites: favoritesreducer,
@@ -15,6 +16,7 @@ const allReducers = combineReducers({
   overlay: overlayReducer,
   totals: cartTotalsReducers,
   client_Secret: clientSecretReducer,
+  collapsables_Controller: Collapsablereducer
 });
 
 export default allReducers;

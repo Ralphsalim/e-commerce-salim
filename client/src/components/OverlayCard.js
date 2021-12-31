@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteoverlay } from "./../actions";
 
@@ -13,8 +13,21 @@ function OverlayCard(props) {
   const handleClick = () => {
     dispatch(deleteoverlay());
   };
+  const [viewWidth, setviewWidth] = useState(window.innerWidth);
+  const [viewheight, setViewheight] = useState(window.innerHeight-60);
+
+  const setWidth = () => {
+    setViewheight(window.innerHeight);
+    setviewWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", setWidth);
+    return () => {
+      window.removeEventListener("resize", setWidth);
+    };
+  }, []);
   return (
-    <div className="overlay">
+    <div className="overlay" style={{height:viewheight+'px'}}>
       <div
         className="overlay-wrapper"
         style={

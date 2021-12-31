@@ -1,16 +1,14 @@
-import Favorite from "@mui/icons-material/Favorite";
 import React, { useRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addcartitem,
-  addcartitems,
   addfavourite,
   deletecartitem,
-  deletecartitems,
   deletefavorite,
   initializecarttotals,
 } from "../actions";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+import ProductLike from "./ProductLike";
 
 //favrites functionality
 
@@ -32,14 +30,27 @@ function Product(props) {
 
   const [isFavorited, setisFavorited] = useState(false);
   const [isCartItem, setisCartItem] = useState(false);
+  const [viewWidth, setViewWidth] = useState(window.innerWidth);
 
   //useEffect for getting and setting the height of the product image
   //relies on the width of the image
   useEffect(() => {
     const width = productRef.current.offsetWidth;
-    const height = width + width / 3;
+    const height = width + width / 2.5;
     setproductHeight(height);
-  }, [productRef]);
+  }, [viewWidth]);
+
+  const getWindowSize = () => {
+    setViewWidth(window.innerWidth);
+  };
+
+
+  useEffect(() => {
+    window.addEventListener("resize", getWindowSize);
+    return () => {
+      window.removeEventListener("resize", getWindowSize);
+    };
+  }, []);
 
   //updates is cart item when state chenges by deleting item from store
   //deletes happen in the CartItems component
@@ -52,14 +63,6 @@ function Product(props) {
     if (favorites[product._id]) setisFavorited(true);
     else setisFavorited(false);
   }, [favorites[product._id]]);
-
-  //adds and removes items to favorites by updating favorites in state
-  const updateFavorites = (product) => {
-    if (isFavorited) dispatch(deletefavorite(product._id));
-    else dispatch(addfavourite(product));
-
-    setisFavorited((prev) => !prev);
-  };
 
   //
   const updateCart = (product) => {
@@ -77,13 +80,16 @@ function Product(props) {
   return (
     <div className="product" ref={productRef}>
       <div className="product-img">
-        <span className="product-like" onClick={() => updateFavorites(product)}>
-          {favorites[product._id] | isFavorited ? (
-            <Favorite sx={{ color: "red" }}></Favorite>
-          ) : (
-            <FavoriteBorderIcon></FavoriteBorderIcon>
-          )}
+        <span
+          className="product-add-to-cart"
+          onClick={() => updateCart(product)}
+        >
+          {isCartItem ? "Added To Cart" : "Add To Cart"}
         </span>
+        <ProductLike
+          product={product}
+          style={{ position: "absolute", bottom: " 10px", right: "10px" }}
+        ></ProductLike>
         <img
           src={product.url}
           alt=""
@@ -93,10 +99,6 @@ function Product(props) {
       <div className="product-info">
         <span>{product.price} kr</span> <br />
         <span>{product.name}</span>
-      </div>
-
-      <div className="product-add-to-cart" onClick={() => updateCart(product)}>
-        {isCartItem ? "Added To Cart" : "Add To Cart"}
       </div>
     </div>
   );

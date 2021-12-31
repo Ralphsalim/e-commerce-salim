@@ -18,6 +18,19 @@ function App() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   const overlay = useSelector((state) => state.overlay);
+  const [viewWidth, setviewWidth] = useState(window.innerWidth);
+  const [viewheight, setViewheight] = useState(window.innerHeight);
+
+  const setWidth = () => {
+    setViewheight(window.innerHeight);
+    setviewWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", setWidth);
+    return () => {
+      window.removeEventListener("resize", setWidth);
+    };
+  }, []);
 
   //retrieves products from data base
   useEffect(() => {
@@ -30,26 +43,30 @@ function App() {
       className="App"
       style={{
         overflowY: overlay ? "hidden" : "scroll",
-        height: overlay ? "100vh" : '',
+        height: overlay ? "100vh" : "",
       }}
     >
       <Navbar></Navbar>
-      <div className="content">
-        {products
-          ? products.map((product) => {
-              return <Product key={product._id} product={product}></Product>;
-            })
-          : null}
 
-        {overlay ? (
-          <OverlayCard
-            components={{
-              ACCOUNT: <Login></Login>,
-              FAVORITE: <FavoriteItems></FavoriteItems>,
-              CART: <CartItems></CartItems>,
-            }}
-          ></OverlayCard>
-        ) : null}
+      <div className="app-content">
+        <div className="app-content-left"></div>
+        <div className="app-content-center">
+          {products
+            ? products.map((product) => {
+                return <Product key={product._id} product={product}></Product>;
+              })
+            : null}
+
+          {overlay ? (
+            <OverlayCard
+              components={{
+                ACCOUNT: <Login></Login>,
+                FAVORITE: <FavoriteItems></FavoriteItems>,
+                CART: <CartItems></CartItems>,
+              }}
+            ></OverlayCard>
+          ) : null}
+        </div>
       </div>
     </div>
   );

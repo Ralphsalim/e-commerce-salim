@@ -6,6 +6,10 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckOutForm";
 import stripePromise from "../stripe/stripePromise";
 import Navbar from "../components/Navbar";
+import Collapsable from "../components/Collapsable";
+import PersonalInfo from "../components/PersonalInfo";
+import BillingInfo from "../components/BillingInfo";
+import CartItemsCheckout from "../components/CartItemsCheckout";
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -14,21 +18,25 @@ function Checkout() {
     clientSecret: client_Secret,
     appearance: { theme: "stripe" },
   };
+
   return (
     <div className="Checkout">
       <Navbar></Navbar>
       <div className="Checkout-content">
-        <div className="Checkout-left">left</div>
-        <div className="Checkout-center">
+        <div className="checkout-left">
+          <PersonalInfo></PersonalInfo>
+          <BillingInfo></BillingInfo>
           {client_Secret ? (
             <Elements stripe={stripePromise} options={options}>
               <CheckoutForm></CheckoutForm>
             </Elements>
           ) : (
-            <div>Loading</div>
+            null
           )}
         </div>
-        <div className="Checkout-right">right</div>
+        <div className="checkout-right">
+          <CartItemsCheckout page="checkout"></CartItemsCheckout>
+        </div>
       </div>
     </div>
   );

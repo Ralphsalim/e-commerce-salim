@@ -13,13 +13,11 @@ const createProducts = async (req, res) => {
     products.map(async (product) => {
       const result = await Product.create(product);
     });
-    res.status(200).send('success');
+    res.status(200).send("success");
   } catch (error) {
     console.log(error);
-    res.status(401).send('there was an error')
+    res.status(401).send("there was an error");
   }
-
-  
 };
 
 module.exports = { getAllProducts, createProducts };
