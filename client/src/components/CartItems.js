@@ -25,35 +25,7 @@ function CartItems() {
     else setisCartEmpty(true);
   }, [cart]);
 
-  //sends the cart items to the databse
-  //returns a client secrete which will be used to charge the customer
-  //see store
-  const checkout = () => {
-    let items = {};
-
-    //makes sure that only valid ids exist
-    Object.keys(totals).forEach((key) => {
-      if (
-        key !== "total" &&
-        key !== "quantity" &&
-        key !== "undefined" &&
-        key !== "null"
-      ) {
-        return (items = {
-          ...items,
-          [key]: { quantity: totals[key].quantity },
-        });
-      }
-    });
-
-    axios
-      .post("/api/v1/create-checkout-session", items)
-      .then((res) => {
-        dispatch(setclientsecret(res.data.clientSecret));
-      })
-      .catch((err) => console.log(err));
-  };
-
+   
   return (
     <div className="cart-items">
       <div className="cart-items-text">Cart</div>
@@ -74,27 +46,27 @@ function CartItems() {
           component={<ArrowForwardIcon></ArrowForwardIcon>}
           text="Checkout"
           reverse={true}
-          onClick={checkout}
           link="/checkout"
           style={{ padding: "0px 30px 0px 30px", margin: "0px 10px 0px 10px" }}
         ></ComponentCard>
       </div>
 
       <div className="cart-items-main">
-        <div className="cart-items-product">
+        <div className="cart-items-product" style={isCartEmpty&&{justifyContent:'center', maxHeight:'250px', minWidth:'250px', maxWidth:'350px', minHeight:'250px'}}>
           {cart
             ? Object.keys(cart).map((key) => (
                 <Cart product={cart[key]} key={key}></Cart>
               ))
             : null}
           {isCartEmpty ? (
-            <ComponentCard
-              text="Cart Is Empty"
-              style={{ padding: "0px 30px 0px 30px", maxWidth: "400px" }}
-            ></ComponentCard>
+            <span style={{fontSize:'25px', fontWeight:'bold'}}>Cart is Empty </span>
+            // <ComponentCard
+            //   text="Cart Is Empty"
+            //   style={{ padding: "0px 30px 0px 30px", maxWidth: "400px" }}
+            // ></ComponentCard>
           ) : null}
         </div>
-        <CartItemsCheckout page="home" onClick={checkout}></CartItemsCheckout>
+        <CartItemsCheckout page="home" ></CartItemsCheckout>
       </div>
     </div>
   );

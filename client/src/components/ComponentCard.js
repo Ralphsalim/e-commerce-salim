@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ComponentCard = (props) => {
   const { link, text, component, style, reverse } = props;
   let reverseOrder = reverse || false;
-
+ 
   let styles = {
     display: "flex",
     justifyContent: " center",

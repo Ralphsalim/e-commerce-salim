@@ -211,6 +211,7 @@ button,
   .cart-items-product {
     min-width: 100%;
     width: 100%;
+    min-height: 250px;
   }
 
   .cart-info {
