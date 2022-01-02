@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { TextValue } from "./CartItems";
 import { ComponentCard } from "./ComponentCard";
@@ -5,6 +6,14 @@ import { ComponentCard } from "./ComponentCard";
 const CartItemsCheckout = (props) => {
   const { style, page, onClick } = props;
   const totals = useSelector((state) => state.totals);
+  const cart = useSelector((state) => state.cart);
+  const [isCartEmpty, setisCartEmpty] = useState(true);
+
+  useEffect(() => {
+    if (!Object.keys(cart).length) setisCartEmpty(true);
+    else setisCartEmpty(false);
+  }, [cart]);
+
   return (
     <div className="cart-items-checkout">
       <TextValue text="Discounts" value="Apply Discount"></TextValue>
@@ -42,9 +51,11 @@ const CartItemsCheckout = (props) => {
       ) : (
         <ComponentCard
           text={page === "checkout?" ? "Thanks" : "Checkout"}
-          style={{ marginTop: "40px", height: "45px" }}
-          link={page === "checkout?" ? null : "checkout"}
-      
+          style={{
+            marginTop: "40px",
+            height: "45px",
+          }}
+          link={page === "checkout" ? null : "checkout"}
         ></ComponentCard>
       )}
     </div>

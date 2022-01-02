@@ -25,7 +25,6 @@ function CartItems() {
     else setisCartEmpty(true);
   }, [cart]);
 
-   
   return (
     <div className="cart-items">
       <div className="cart-items-text">Cart</div>
@@ -39,34 +38,47 @@ function CartItems() {
         <ComponentCard
           component={<DeleteIcon></DeleteIcon>}
           text="Empty Cart"
-          style={{ padding: "0px 30px 0px 30px", margin: "0px 10px 0px 10px" }}
+          style={{ padding: "0px 30px 0px 30px", margin: "0px 10px 0px 10px"  }}
         ></ComponentCard>
 
         <ComponentCard
           component={<ArrowForwardIcon></ArrowForwardIcon>}
           text="Checkout"
           reverse={true}
-          link="/checkout"
+          link={isCartEmpty ? null : "/checkout"}
           style={{ padding: "0px 30px 0px 30px", margin: "0px 10px 0px 10px" }}
         ></ComponentCard>
       </div>
 
       <div className="cart-items-main">
-        <div className="cart-items-product" style={isCartEmpty&&{justifyContent:'center', maxHeight:'250px', minWidth:'250px', maxWidth:'350px', minHeight:'250px'}}>
+        <div
+          className="cart-items-product"
+          style={
+            isCartEmpty ? {
+              justifyContent: "center",
+              maxHeight: "250px",
+              minWidth: "250px",
+              maxWidth: "350px",
+              minHeight: "250px",
+            }:{}
+          }
+        >
           {cart
             ? Object.keys(cart).map((key) => (
                 <Cart product={cart[key]} key={key}></Cart>
               ))
             : null}
           {isCartEmpty ? (
-            <span style={{fontSize:'25px', fontWeight:'bold'}}>Cart is Empty </span>
-            // <ComponentCard
-            //   text="Cart Is Empty"
-            //   style={{ padding: "0px 30px 0px 30px", maxWidth: "400px" }}
-            // ></ComponentCard>
-          ) : null}
+            <span style={{ fontSize: "25px", fontWeight: "bold" }}>
+              Cart is Empty{" "}
+            </span>
+          ) : // <ComponentCard
+          //   text="Cart Is Empty"
+          //   style={{ padding: "0px 30px 0px 30px", maxWidth: "400px" }}
+          // ></ComponentCard>
+          null}
         </div>
-        <CartItemsCheckout page="home" ></CartItemsCheckout>
+        <CartItemsCheckout page="home"></CartItemsCheckout>
       </div>
     </div>
   );

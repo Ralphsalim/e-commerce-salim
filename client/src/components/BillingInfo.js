@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatecollapsables } from "../actions";
+import { updatecollapsables, updateOrder } from "../actions";
 
 function BillingInfo() {
   const dispatch = useDispatch();
@@ -12,20 +12,35 @@ function BillingInfo() {
   const controller = collapsables_Controller[indexOfCurrentCollapsable];
   let indexOfNextCollapsable = indexOfCurrentCollapsable + 1; //refers to the next element in the collapsables_Controller
 
-  const handleChange = () => {};
+  //
+
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setcity] = useState("");
+  const [street, setstreet] = useState("");
+  const [houseNumber, sethouseNumber] = useState("");
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     //sets the current value of next element
     //sets the current value of is current to false
     //submits the form
     //makes the form editable
     //
-    dispatch(
-      updatecollapsables({
-        current: indexOfCurrentCollapsable,
-        next: indexOfNextCollapsable,
-      })
-    );
+    if (postalCode && city && street && houseNumber) {
+      dispatch(
+        updateOrder({
+          property: "billingInfo",
+          value: { postalCode, street, city, houseNumber },
+        })
+      );
+
+      dispatch(
+        updatecollapsables({
+          current: indexOfCurrentCollapsable,
+          next: indexOfNextCollapsable,
+        })
+      );
+    }
   };
 
   const minHeight = () => {
@@ -37,24 +52,54 @@ function BillingInfo() {
 
   return (
     <section className="billing-info">
-      <div style={{ minHeight: minHeight(),fontSize:'25px', margin:'0px 0px 10px 0px', paddingTop:'20px' }}>Billing Information</div>
+      <div
+        style={{
+          minHeight: minHeight(),
+          fontSize: "25px",
+          margin: "0px 0px 10px 0px",
+          paddingTop: "20px",
+        }}
+      >
+        Billing Information
+      </div>
       {controller.isCurrent && (
         <form className="personal-info-form" onSubmit={handleSubmit}>
           <div>
-            <span>Additional Adress</span>
-            <input type="text" name="first-name" id="first-name" />
+            <span>Street </span>
+            <input
+              type="text"
+              name="street"
+              value={street}
+              onChange={(e) => setstreet(e.target.value)}
+            />
           </div>
           <div>
-            <span>address</span>
-            <input type="text" name="address" id="first-name" />
+            <span>Apartment Number</span>
+            <input
+              type="text"
+              name="flat-number"
+              value={houseNumber}
+              onChange={(e) => sethouseNumber(e.target.value)}
+            />
           </div>
           <div>
             <span>Postal Code</span>
-            <input type="text" name="postal-code" id="birth-date" />{" "}
+            <input
+              type="text"
+              name="postal-code"
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+            />{" "}
           </div>
           <div>
-            <span>Location</span>
-            <input type="text" name="location" id="" />{" "}
+            <span>City</span>
+            <input
+              type="text"
+              name="city"
+              id=""
+              value={city}
+              onChange={(e) => setcity(e.target.value)}
+            />{" "}
           </div>
 
           <div className="personal-info-form-submit">

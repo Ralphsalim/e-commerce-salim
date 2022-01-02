@@ -50,3 +50,13 @@ export const deleteclientsecret = (o) => {
 export const updatecollapsables = (o) => {
   return { type: "UPDATE-COLLAPSABLES", payload: o };
 };
+
+//user
+export const setUser = (o) => {
+  return { type: "SET-USER", payload: o };
+};
+
+//order
+export const updateOrder = (o) => {
+  return { type: "UPDATE-ORDER", payload: o };
+};

@@ -51,6 +51,8 @@ function Checkout() {
       }
     });
 
+    //will create acheckout session and also an order document in the db where 
+    //additional information on the order will be stored 
     axios
       .post("/api/v1/create-checkout-session", items)
       .then((res) => {

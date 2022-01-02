@@ -4,9 +4,12 @@ const stripe = require("stripe")(
 
 const Product = require("./../models/Product");
 
+//will create a checkout session
+//creates also an order 
+
 const createCheckoutSession = async (req, res) => {
   const cart = req.body;
-
+console.log(cart)
   const cartTotal = await getCartTotal(cart);
 
   const paymentIntent = await stripe.paymentIntents.create({
@@ -34,6 +37,17 @@ const getCartTotal = async (cart) => {
 
   return total;
 };
+
+
+
+
+
+
+
+
+
+
+
 
 //when you use session, the checkout is hosted on Klarna page
 //

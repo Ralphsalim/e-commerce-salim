@@ -15,10 +15,12 @@ const CheckoutForm = () => {
 
     if (!stripe || !elements) return;
 
+    
+
     const result = await stripe.confirmPayment({
       elements,
       confirmParams: { return_url: "https://e-commerce-salim.herokuapp.com/" },
-    });
+    })
 
     if (result.error) console.log(result.error.message);
   };
@@ -57,7 +59,17 @@ const CheckoutForm = () => {
       {controller.isCurrent && (
         <div className="checkoutform-form">
           <PaymentElement />
-          <button disabled={!stripe} style={{marginTop:'30px', backgroundColor:'black', color:'white', height:'45px'}}>Pay</button>
+          <button
+            disabled={!stripe}
+            style={{
+              marginTop: "30px",
+              backgroundColor: "black",
+              color: "white",
+              height: "45px",
+            }}
+          >
+            Pay
+          </button>
         </div>
       )}
     </form>
