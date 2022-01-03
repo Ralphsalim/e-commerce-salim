@@ -3,6 +3,10 @@
   margin: 0px;
 }
 
+body input {
+  padding: 0px 8px 0px 8px;
+}
+
 /* Navbar styling */
 .navbar {
   display: flex;
@@ -225,8 +229,6 @@ button,
     max-width: 100%;
   }
 
-
-
   .overlay-wrapper {
     min-width: 100%;
   }
@@ -256,11 +258,8 @@ button,
   background-color: white;
   box-shadow: 0px 0px 10px 10px whitesmoke;
   border-radius: 10px;
-  
-
 }
 
- 
 /**Overlay*/
 
 .overlay {
@@ -308,11 +307,8 @@ button,
   max-width: 400px;
   margin: 0px 5px 0 5px;
   box-sizing: border-box;
-   padding-left: 10px;
+  padding-left: 10px;
   padding-right: 10px;
-
-
-
 }
 
 .checkout-left {
@@ -322,7 +318,6 @@ button,
   margin: 0px 5px 0 5px;
   padding-left: 20px;
   padding-right: 20px;
-
 }
 
 @media only screen and (max-width: 767px) {
@@ -339,16 +334,15 @@ button,
 .cart-items-checkout,
 .personal-info,
 .billing-info,
-.checkoutform{
+.checkoutform {
   margin-bottom: 40px;
   margin-top: 30px;
   padding-right: 20px;
   padding-left: 20px;
-  box-shadow: #FBFBFC;
+  box-shadow: #fbfbfc;
   background-color: white;
   box-shadow: 0px 0px 10px 10px whitesmoke;
   border-radius: 10px;
-  
 }
 .personal-info-form > div {
   display: flex;
@@ -370,8 +364,47 @@ button {
   width: 100%;
 }
 
-.personal-info-form > div button{ 
+.personal-info-form > div button {
   background-color: black;
   color: white;
 }
 
+.personal-info-form input {
+  padding: 0px 8px;
+  box-sizing: border-box;
+  margin-top: 2px;
+  border: 1px solid black;
+}
+
+/* My page */
+.mypage-content {
+  display: flex;
+  justify-content: center;
+}
+
+.mypage-content-left {
+  flex: 1 1 auto;
+  max-width: 350px;
+}
+
+.mypage-content-right {
+  flex: 1 1 auto;
+  max-width: 700px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.mypage-content-left {
+  box-shadow: #fbfbfc;
+  background-color: white;
+  box-shadow: 0px 0px 10px 10px whitesmoke;
+  border-radius: 10px;
+  margin: 0px 10px 0px 10px;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-left: 20px;
+  margin-top: 30px;
+  height: fit-content;
+}
+
+/*Register page */

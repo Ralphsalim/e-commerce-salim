@@ -60,3 +60,8 @@ export const setUser = (o) => {
 export const updateOrder = (o) => {
   return { type: "UPDATE-ORDER", payload: o };
 };
+
+//loginredirect 
+export const setloginredirect =(o)=>{ 
+  return { type:"SET-LOGIN-REDIRECT", payload:o}
+}

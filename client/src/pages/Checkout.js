@@ -24,6 +24,8 @@ function Checkout() {
     appearance: { theme: "stripe" },
   };
 
+  const [orderId, setorderId] = useState('') //
+
   useEffect(() => {
     console.log(Object.keys(cart));
     if (!Object.keys(cart).length) {
@@ -46,16 +48,17 @@ function Checkout() {
       ) {
         return (items = {
           ...items,
-          [key]: { quantity: totals[key].quantity },
+          [key]: { quantity: totals[key].quantity},
         });
       }
     });
 
-    //will create acheckout session and also an order document in the db where 
-    //additional information on the order will be stored 
+    //will create acheckout session and also an order document in the db where
+    //additional information on the order will be stored
     axios
       .post("/api/v1/create-checkout-session", items)
       .then((res) => {
+        setorderId(res.data.orderId);
         dispatch(setclientsecret(res.data.clientSecret));
       })
       .catch((err) => console.log(err));
@@ -76,7 +79,7 @@ function Checkout() {
           <BillingInfo></BillingInfo>
           {client_Secret ? (
             <Elements stripe={stripePromise} options={options}>
-              <CheckoutForm></CheckoutForm>
+              <CheckoutForm orderId={orderId}></CheckoutForm>
             </Elements>
           ) : null}
         </div>

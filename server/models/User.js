@@ -6,10 +6,12 @@ const UserSchema = mongoose.Schema({
   username:String, 
   password: String,
   email:String, 
+  phonenumber:Number,
   Orders:Array, 
   Likes:Array,
   Cart:Array, 
-  ShippingAddress:Object, 
+  billingAdress:Object, 
+  birthDate: String,
 
 
 });

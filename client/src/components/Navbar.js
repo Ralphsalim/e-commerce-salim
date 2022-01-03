@@ -3,7 +3,7 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonIcon from "@mui/icons-material/Person";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setoverlay } from "../actions";
 
@@ -12,25 +12,31 @@ function Navbar() {
   const favorites = useSelector((state) => state.favorites);
   const cart = useSelector((state) => state.cart);
   const [favoritesLength, setfavoritesLength] = useState(0);
-  const totals = useSelector(state => state.totals)
+  const totals = useSelector((state) => state.totals);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   //displays the overlaycard component
   //content depends on the action
   const handleClick = (action) => {
-    dispatch(setoverlay(action));
+    if (action === "ACCOUNT" && user) {
+      //redirect user to my account if logged in
+      navigate("/mypage");
+    } else dispatch(setoverlay(action));
   };
 
   useEffect(() => {
     setfavoritesLength(() => Object.keys(favorites).length);
   }, [favorites]);
 
-
   return (
     <div className="navbar">
       <div className="navbar-left">Cubus</div>
       <div className="navbar-right">
         <span onClick={() => handleClick("CART")}>
-          {totals.quantity ? <span style={styles}>{totals.quantity}</span> : null}
+          {totals.quantity ? (
+            <span style={styles}>{totals.quantity}</span>
+          ) : null}
           <ShoppingBagIcon sx={{ fontSize: "30px" }}></ShoppingBagIcon>
         </span>
 

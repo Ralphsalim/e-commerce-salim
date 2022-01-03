@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatecollapsables, updateOrder } from "../actions";
 
-const PersonalInfo = () => {
+const PersonalInfo = (props) => {
+
+
   const dispatch = useDispatch();
 
   const collapsables_Controller = useSelector(
@@ -17,6 +19,7 @@ const PersonalInfo = () => {
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState ("")
 
   const handleSubmit = (e) => {
     //sets the current value of next element
@@ -97,6 +100,16 @@ const PersonalInfo = () => {
               name="tel"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
+            />{" "}
+          </div>
+
+          <div>
+            <span>Email</span>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />{" "}
           </div>
 

@@ -5,7 +5,6 @@ import { store } from "../index";
 import Login from "../components/Login";
 import Navbar from "../components/Navbar";
 import Product from "../components/Product";
-import Register from "../Register";
 import Cart from "../components/Cart";
 import Checkout from "./Checkout";
 import { setproducts } from "../actions";

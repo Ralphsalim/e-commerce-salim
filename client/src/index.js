@@ -7,6 +7,9 @@ import allReducers from "./reducers";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Checkout from "./pages/Checkout";
+import MyPage from "./pages/MyPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 export let store = createStore(allReducers);
 store.subscribe(() => console.log(store.getState()));
@@ -16,6 +19,9 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App></App>}></Route>
         <Route path="/checkout" element={<Checkout></Checkout>}></Route>
+        <Route path="/mypage" element={<MyPage></MyPage>}></Route>
+        <Route path="/login" element={<LoginPage></LoginPage>}></Route>
+        <Route path="/register" element={<RegisterPage></RegisterPage>}></Route>
       </Routes>
     </BrowserRouter>
   </Provider>,

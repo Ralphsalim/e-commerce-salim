@@ -1,14 +1,17 @@
 const path = require("path");
 const  LoginUser  = require("../controllers/login");
+const { createOrder } = require("../controllers/orders");
 const { getAllProducts, createProducts } = require("../controllers/products");
 const { createCheckoutSession } = require("../controllers/stripe");
-const { createUser } = require("../controllers/user");
+const { createUser, patchUser } = require("../controllers/user");
+
 const router = require("express").Router();
 
 router.route("/products").get(getAllProducts).post(createProducts);
 router.route("/create-checkout-session").post(createCheckoutSession);
 router.route("/login").post(LoginUser);
-router.route("/user").post(createUser)
+router.route("/user").post(createUser).patch(patchUser)
+router.route('/orders').post(createOrder)
 
 router.route("*", (req, res) => {
   res.sendFile(

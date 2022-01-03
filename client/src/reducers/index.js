@@ -10,6 +10,7 @@ import clientSecretReducer from "./clientSecretReducer";
 import Collapsablereducer from "./collapsableReducer";
 import userReducer from "./userReducer";
 import ordersReducer from "./ordersreducer";
+import loginRedirectReducer from "./loginRedirectReducer";
 
 const allReducers = combineReducers({
   user: userReducer,
@@ -21,6 +22,7 @@ const allReducers = combineReducers({
   client_Secret: clientSecretReducer,
   collapsables_Controller: Collapsablereducer,
   currentOrder: ordersReducer,
+  loginRedirect: loginRedirectReducer,
 });
 
 export default allReducers;

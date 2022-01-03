@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { deleteoverlay, setUser } from "../actions";
+import { deleteoverlay, setloginredirect, setUser } from "../actions";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { TenMp } from "@mui/icons-material";
 
 function Login() {
   const [email, setemail] = useState("");
@@ -9,7 +12,8 @@ function Login() {
   const [emailErrors, setemailErrors] = useState("");
   const [passwordErrors, setpasswordErrors] = useState("");
   const dispatch = useDispatch();
-
+  const loginRedirect = useSelector((state) => state.loginRedirect);
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email && password) {
@@ -25,6 +29,13 @@ function Login() {
           } else {
             dispatch(setUser(res.data.user));
             dispatch(deleteoverlay());
+
+            //navigates to appropriate page after succesive login
+            if (loginRedirect) {
+              const temp = loginRedirect;
+              dispatch(setloginredirect(""));
+              navigate(temp);
+            }
           }
         })
         .catch((err) => console.log(err));
