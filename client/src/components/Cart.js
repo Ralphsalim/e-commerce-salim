@@ -10,16 +10,18 @@ import ProductLike from "./../components/ProductLike";
 import { TextValue } from "./CartItems";
 
 function Cart(props) {
-  const { product } = props;
+  const { productVariant } = props;
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const totals = useSelector((state) => state.totals);
 
-  //deletes item from the cart in store using the product id
+  console.log(productVariant);
+
+  //deletes item from the cart in store using the productVariant id
   //also deletes it from the totals in store
   const deleteCartItem = (id) => {
     dispatch(deletecartitem(id));
-    dispatch(initializecarttotals({ id }));
+    dispatch(initializecarttotals({ variantId: id }));
   };
 
   const handleQuantity = (id, action) => {
@@ -34,44 +36,53 @@ function Cart(props) {
   return (
     <div className="cart">
       <div className="cart-item">
-        <img src={product.url}></img>
-        <ProductLike product={product}></ProductLike>
+        <img src={productVariant.image}></img>
+        <ProductLike
+          productVariant={{
+            ...productVariant,
+            variantId: productVariant._id + "-" + productVariant.color,
+          }}
+        ></ProductLike>
         <span
           className="cart-item-delete"
-          onClick={() => deleteCartItem(product._id)}
-          style={{ right: "10px", position: "absolute", top:'0px'}}
+          onClick={() => deleteCartItem(productVariant.variantId)}
+          style={{ right: "10px", position: "absolute", top: "0px" }}
         >
-          <Delete sx={{fontSize:'20px'}}></Delete>
+          <Delete sx={{ fontSize: "20px" }}></Delete>
         </span>
       </div>
 
       <div className="cart-info">
-        <TextValue text={product.name}></TextValue>
-        <TextValue text="Price" value={product.price}></TextValue>
-        <TextValue text="Item No." value="7654356789"></TextValue>
-        <TextValue text="Color" value="red"></TextValue>
-        <TextValue text="Size." value="XS"></TextValue>
+        <TextValue text={productVariant.name}></TextValue>
+        <TextValue text="Price" value={productVariant.price}></TextValue>
+        <TextValue text="Item No." value={productVariant._id}></TextValue>
+        <TextValue text="Color" value={productVariant.color}></TextValue>
+        <TextValue text="Size." value={productVariant.size}></TextValue>
         <TextValue
           text="Total"
-          value={`Sek ${totals[product._id].total}`}
-          style={{color:'black', fontWeight:'bold'}}
-          styleValue={{fontWeight:'bold'}}
+          value={`Sek ${totals[productVariant.variantId].total}`}
+          style={{ color: "black", fontWeight: "bold" }}
+          styleValue={{ fontWeight: "bold" }}
         ></TextValue>
 
         <div className="cart-quantity">
           <SingleValue
             value="-"
-            onClick={() => handleQuantity(product._id, "decrement")}
+            onClick={() =>
+              handleQuantity(productVariant.variantId, "decrement")
+            }
           />
 
           <SingleValue
-            value={totals[product._id].quantity}
+            value={totals[productVariant.variantId].quantity}
             style={{ backgroundColor: "white", color: "black" }}
           />
 
           <SingleValue
             value="+"
-            onClick={() => handleQuantity(product._id, "increment")}
+            onClick={() =>
+              handleQuantity(productVariant.variantId, "increment")
+            }
           />
         </div>
       </div>
@@ -90,7 +101,7 @@ export const SingleValue = (props) => {
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "20px",
-    marginTop:'30px',
+    marginTop: "30px",
     ...style,
   };
   return (

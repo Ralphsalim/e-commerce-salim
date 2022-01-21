@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 
 export const ComponentCard = (props) => {
-  const { link, text, component, style, reverse} = props;
+  const { link, text, component, style, reverse, onClick} = props;
   let reverseOrder = reverse || false;
  
   let styles = {
@@ -17,7 +17,7 @@ export const ComponentCard = (props) => {
   styles = { ...styles, ...style };
 
   return (
-    <section style={styles} onClick={props.onClick} >
+    <section style={styles} onClick={onClick} >
       {link ? (
         <Link
           to={link}

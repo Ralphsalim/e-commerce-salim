@@ -3,7 +3,13 @@ const Product = require("../models/Product");
 
 const getAllProducts = async (req, res) => {
   const products = await Product.find({});
-  res.send(products);
+
+  const result = {};
+  products.forEach((product) => {
+    result[product._id.toString()] = product;
+  });
+
+  res.send(result);
 };
 
 const createProducts = async (req, res) => {

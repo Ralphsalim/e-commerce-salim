@@ -6,6 +6,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setoverlay } from "../actions";
+import SuccessMessage from "../components/SuccessMessage";
+import { setsuccessmessage } from "../actions";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -16,6 +18,9 @@ function Navbar() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
+  const [successMessage, setsuccessMessage] = useState("");
+
+  const statusMessages = useSelector((state) => state.statusMessages);
   //displays the overlaycard component
   //content depends on the action
   const handleClick = (action) => {
@@ -29,9 +34,33 @@ function Navbar() {
     setfavoritesLength(() => Object.keys(favorites).length);
   }, [favorites]);
 
+  useEffect(() => {
+    if (!statusMessages.success) return;
+    const message = statusMessages.success;
+    setsuccessMessage(message);
+    dispatch(setsuccessmessage(""));
+    setTimeout(() => {
+      setsuccessMessage("");
+    }, 2000);
+  }, [statusMessages]);
+
+  useEffect(() => {}, [statusMessages]);
+
   return (
     <div className="navbar">
-      <div className="navbar-left">Cubus</div>
+      <div className="navbar-left">
+        <Link
+          to="/"
+          style={{
+            textDecoration: "none",
+            fontSize: "30px",
+            color: "black",
+            marginLeft: "20px",
+          }}
+        >
+          Sumaya{" "}
+        </Link>
+      </div>
       <div className="navbar-right">
         <span onClick={() => handleClick("CART")}>
           {totals.quantity ? (
@@ -51,6 +80,22 @@ function Navbar() {
           <PersonIcon sx={{ fontSize: "35px" }}></PersonIcon>
         </span>
       </div>
+
+      {/* <div style={{ position: "absolute", bottom: "0px", right: "0px" }}>
+      
+      </div> */}
+
+      {successMessage && (
+        <SuccessMessage
+          message={successMessage}
+          style={{
+            position: "absolute",
+            bottom: "-100px",
+            right: "30px",
+            zIndex: "400",
+          }}
+        ></SuccessMessage>
+      )}
     </div>
   );
 }

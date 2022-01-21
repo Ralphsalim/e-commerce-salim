@@ -11,6 +11,8 @@ import Collapsablereducer from "./collapsableReducer";
 import userReducer from "./userReducer";
 import ordersReducer from "./ordersreducer";
 import loginRedirectReducer from "./loginRedirectReducer";
+import paymentIntentReducer from "./paymentIntentReducer";
+import statusMessages from "./statusMessages";
 
 const allReducers = combineReducers({
   user: userReducer,
@@ -23,6 +25,8 @@ const allReducers = combineReducers({
   collapsables_Controller: Collapsablereducer,
   currentOrder: ordersReducer,
   loginRedirect: loginRedirectReducer,
+  paymentIntentId: paymentIntentReducer,
+  statusMessages: statusMessages,
 });
 
 export default allReducers;

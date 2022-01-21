@@ -54,13 +54,14 @@ function MyPage() {
   const [isMobileDevice, setisMobileDevice] = useState(false);
   const [showMenu, setShowMenu] = useState(true);
   const [showDisplay, setshowDisplay] = useState(true);
+  const [viewWidth, setviewWidth] = useState(window.innerWidth);
 
   const getViewWidth = () => {
     if (window.innerWidth < 700) setisMobileDevice(true);
     else setisMobileDevice(false);
-
+    setviewWidth(() => window.innerWidth);
     console.log("resizing");
-    console.log(window.innerWidth);
+    console.log(viewWidth);
   };
 
   useEffect(() => {
@@ -72,18 +73,18 @@ function MyPage() {
   }, []);
 
   useEffect(() => {
-    if (window.vieWidth < 700) setisMobileDevice(true);
+    
+    if (window.innerWidth < 700) setisMobileDevice(()=>true);
     else {
-      setisMobileDevice(false);
+      setisMobileDevice(()=>false);
     }
-  }, []);
+  }, [viewWidth]);
 
   //display is hidden by default on mobile devices
   useEffect(() => {
-    if (isMobileDevice) setshowDisplay(false);
+    if (isMobileDevice) setshowDisplay(()=>false);
+    else setshowDisplay(()=>true)
   }, [isMobileDevice]);
-
-  
 
   const goBack = () => {
     setshowDisplay((prev) => !prev);
@@ -109,7 +110,7 @@ function MyPage() {
   return (
     <div className="mypage">
       <Navbar></Navbar>
-      <div className="mypage-content">
+      <div className="mypage-content" style={{marginTop:'80px'}}>
         {showMenu && (
           <section
             className="mypage-content-left"

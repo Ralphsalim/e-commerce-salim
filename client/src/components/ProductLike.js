@@ -1,25 +1,39 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
-import React, {useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addfavourite, deletefavorite } from "../actions";
 
 const ProductLike = (props) => {
-  const { product, style} = props;
+  const { style, productVariant } = props;
+
   const dispatch = useDispatch();
   const [isFavorited, setisFavorited] = useState(false);
   const favorites = useSelector((state) => state.favorites);
 
-  const updateFavorites = (product) => {
-    if (isFavorited) dispatch(deletefavorite(product._id));
-    else dispatch(addfavourite(product));
+  
+  const updateFavorites = () => {
+    if (isFavorited) dispatch(deletefavorite(productVariant.variantId));
+    else dispatch(addfavourite(productVariant));
     setisFavorited((prev) => !prev);
   };
 
-  const styles={cursor:'pointer', ...style}
+  //checks to see if the product is favorited
+  useEffect(() => {
+    setisFavorited(() => {
+      if (favorites[productVariant.variantId]) return true;
+      else return false;
+    });
+  }, [favorites[productVariant.variantId]]);
+
+  const styles = { cursor: "pointer", ...style };
   return (
-    <span className="product-like" onClick={() => updateFavorites(product)} style={styles}>
-      {favorites[product._id] | isFavorited ? (
+    <span
+      className="product-like"
+      onClick={() => updateFavorites()}
+      style={styles}
+    >
+      {favorites[productVariant.variantId] | isFavorited ? (
         <Favorite sx={{ color: "red" }}></Favorite>
       ) : (
         <FavoriteBorderIcon></FavoriteBorderIcon>

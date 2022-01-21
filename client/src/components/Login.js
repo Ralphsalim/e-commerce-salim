@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { deleteoverlay, setloginredirect, setUser } from "../actions";
+import {
+  deleteoverlay,
+  setloginredirect,
+  setsuccessmessage,
+  setUser,
+} from "../actions";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TenMp } from "@mui/icons-material";
 
-function Login() {
+function Login(props) {
+  const { style } = props;
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [emailErrors, setemailErrors] = useState("");
@@ -29,6 +35,7 @@ function Login() {
           } else {
             dispatch(setUser(res.data.user));
             dispatch(deleteoverlay());
+            dispatch(setsuccessmessage("Logged In"));
 
             //navigates to appropriate page after succesive login
             if (loginRedirect) {
@@ -43,11 +50,24 @@ function Login() {
   };
 
   return (
-    <div className="login">
+    <div
+      className="login"
+      style={{
+        border: " 1px solid whitesmoke",
+        ...style,
+        backgroundColor: "white",
+      }}
+    >
       <div className="login-text">Login</div>
       <div className="login-form">
         <form onSubmit={handleSubmit}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <input
               type="email"
               name="email"
@@ -59,7 +79,13 @@ function Login() {
             <span>{emailErrors}</span>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <input
               type="password"
               name="password"
@@ -70,7 +96,13 @@ function Login() {
             />
             <span>{passwordErrors}</span>
           </div>
-          <div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <button type="submit">Submit</button>
           </div>
         </form>

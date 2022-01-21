@@ -7,9 +7,9 @@ const UserSchema = mongoose.Schema({
   password: String,
   email:String, 
   phonenumber:Number,
-  Orders:Array, 
-  Likes:Array,
-  Cart:Array, 
+  orders:Array, 
+  likes:Array,
+  cart:Array, 
   billingAdress:Object, 
   birthDate: String,
 

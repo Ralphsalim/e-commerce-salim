@@ -3,13 +3,15 @@ const cartReducer = (state = {}, action) => {
 
   switch (action.type) {
     case "ADD-CART-ITEM":
-      console.log("adding");
-      return { ...state, [payload._id]: payload };
+      const variantId = payload.variantId;
+      return { ...state, [variantId]: payload };
 
     case "DELETE-CART-ITEM":
-      console.log("deleting");
       delete state[payload];
-      return {...state};
+      return { ...state };
+
+    case "CLEAR-CART":
+      return {};
     default:
       return state;
   }

@@ -6,7 +6,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { setclientsecret } from "../actions";
+import { clearcart, cleartotals, setclientsecret } from "../actions";
 import { ComponentCard } from "./ComponentCard";
 import ProductLike from "./ProductLike";
 import CartItemsCheckout from "./CartItemsCheckout";
@@ -25,47 +25,62 @@ function CartItems() {
     else setisCartEmpty(true);
   }, [cart]);
 
+  const handleClick = () => {
+    dispatch(cleartotals());
+    dispatch(clearcart());
+  };
+
   return (
     <div className="cart-items">
       <div className="cart-items-text">Cart</div>
-      <div className="cart-items-menu">
-        {/* <ComponentCard
+      {!isCartEmpty && (
+        <div className="cart-items-menu">
+          {/* <ComponentCard
           component={<ArrowBackIcon></ArrowBackIcon>}
           text="Continue Shopping"
           link="/"
         ></ComponentCard> */}
 
-        <ComponentCard
-          component={<DeleteIcon></DeleteIcon>}
-          text="Empty Cart"
-          style={{ padding: "0px 30px 0px 30px", margin: "0px 10px 0px 10px"  }}
-        ></ComponentCard>
+          <ComponentCard
+            component={<DeleteIcon></DeleteIcon>}
+            text="Empty Cart"
+            style={{
+              padding: "0px 30px 0px 30px",
+              margin: "10px 10px 0px 10px",
+            }}
+            onClick={handleClick}
+          ></ComponentCard>
 
-        <ComponentCard
-          component={<ArrowForwardIcon></ArrowForwardIcon>}
-          text="Checkout"
-          reverse={true}
-          link={isCartEmpty ? null : "/checkout"}
-          style={{ padding: "0px 30px 0px 30px", margin: "0px 10px 0px 10px" }}
-        ></ComponentCard>
-      </div>
-
+          <ComponentCard
+            component={<ArrowForwardIcon></ArrowForwardIcon>}
+            text="Checkout"
+            reverse={true}
+            link={isCartEmpty ? null : "/checkout"}
+            style={{
+              padding: "0px 30px 0px 30px",
+              margin: "10px 10px 0px 10px",
+            }}
+          ></ComponentCard>
+        </div>
+      )}
       <div className="cart-items-main">
         <div
           className="cart-items-product"
           style={
-            isCartEmpty ? {
-              justifyContent: "center",
-              maxHeight: "250px",
-              minWidth: "250px",
-              maxWidth: "350px",
-              minHeight: "250px",
-            }:{}
+            isCartEmpty
+              ? {
+                  justifyContent: "center",
+                  maxHeight: "250px",
+                  minWidth: "250px",
+                  maxWidth: "350px",
+                  minHeight: "250px",
+                }
+              : {}
           }
         >
           {cart
             ? Object.keys(cart).map((key) => (
-                <Cart product={cart[key]} key={key}></Cart>
+                <Cart productVariant={cart[key]} key={key}></Cart>
               ))
             : null}
           {isCartEmpty ? (

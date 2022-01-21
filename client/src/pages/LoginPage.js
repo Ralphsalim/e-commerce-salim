@@ -4,10 +4,10 @@ import Navbar from "../components/Navbar";
 
 function LoginPage() {
   return (
-    <div>
+    <div style={{ backgroundColor: "whitesmoke", height: "100vh" }}>
       <Navbar></Navbar>
       <div className="loginpage-content">
-        <Login></Login>
+        <Login style={{ marginTop: "40px" }}></Login>
       </div>
     </div>
   );

@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatecollapsables, updateOrder } from "../actions";
 
 const PersonalInfo = (props) => {
-
-
   const dispatch = useDispatch();
 
   const collapsables_Controller = useSelector(
@@ -19,7 +17,7 @@ const PersonalInfo = (props) => {
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState ("")
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     //sets the current value of next element
@@ -29,12 +27,11 @@ const PersonalInfo = (props) => {
     //
 
     e.preventDefault();
-    if ((phoneNumber && firstName && lastName, birthDate)) {
-
+    if (phoneNumber && firstName && lastName && birthDate && email) {
       dispatch(
         updateOrder({
           property: "personalInfo",
-          value: { firstName, lastName, birthDate, phoneNumber },
+          value: { firstName, lastName, birthDate, phoneNumber, email },
         })
       );
 

@@ -10,7 +10,7 @@ import Collapsable from "../components/Collapsable";
 import PersonalInfo from "../components/PersonalInfo";
 import BillingInfo from "../components/BillingInfo";
 import CartItemsCheckout from "../components/CartItemsCheckout";
-import { setclientsecret } from "../actions";
+import { setclientsecret, setpaymentintentid, updateOrder } from "../actions";
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -18,13 +18,14 @@ function Checkout() {
   const totals = useSelector((state) => state.totals);
   const client_Secret = useSelector((state) => state.client_Secret);
   const cart = useSelector((state) => state.cart);
+  const [paymentIntentId, setpaymentIntentId] = useState("");
+  const currentOrder = useSelector((state) => state.currentOrder);
+
   const page = "checkout";
   const options = {
     clientSecret: client_Secret,
     appearance: { theme: "stripe" },
   };
-
-  const [orderId, setorderId] = useState('') //
 
   useEffect(() => {
     console.log(Object.keys(cart));
@@ -35,35 +36,30 @@ function Checkout() {
   //sends the cart items to the databse
   //returns a client secrete which will be used to charge the customer
   //see store
-  const checkout = () => {
-    let items = {};
 
-    //makes sure that only valid ids exist
-    Object.keys(totals).forEach((key) => {
-      if (
-        key !== "total" &&
-        key !== "quantity" &&
-        key !== "undefined" &&
-        key !== "null"
-      ) {
-        return (items = {
-          ...items,
-          [key]: { quantity: totals[key].quantity},
-        });
-      }
-    });
+  const checkout = () => {
+    let items = Object.values(totals);
+    items = items.filter((item) => typeof item === "object");
 
     //will create acheckout session and also an order document in the db where
     //additional information on the order will be stored
+
     axios
-      .post("/api/v1/create-checkout-session", items)
+      .post("/api/v1/checkout-session", {
+        items,
+        orderId: currentOrder.orderId,
+      })
       .then((res) => {
-        setorderId(res.data.orderId);
         dispatch(setclientsecret(res.data.clientSecret));
+        dispatch(setpaymentintentid(res.data.paymentIntentId));
+        dispatch(updateOrder({ property: "orderId", value: res.data.orderId }));
       })
       .catch((err) => console.log(err));
   };
 
+  //creates a payment intent if one doesnot exist ie if the client secret is falsey
+  //will only run if there is no payment intent
+  //
   useEffect(() => {
     if (Object.keys(cart).length) {
       checkout();
@@ -73,13 +69,13 @@ function Checkout() {
   return (
     <div className="Checkout">
       <Navbar></Navbar>
-      <div className="Checkout-content">
+      <div className="Checkout-content" style={{ marginTop:'80px'}}>
         <div className="checkout-left">
           <PersonalInfo></PersonalInfo>
           <BillingInfo></BillingInfo>
           {client_Secret ? (
             <Elements stripe={stripePromise} options={options}>
-              <CheckoutForm orderId={orderId}></CheckoutForm>
+              <CheckoutForm></CheckoutForm>
             </Elements>
           ) : null}
         </div>

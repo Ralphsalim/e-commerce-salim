@@ -8,6 +8,7 @@ const OrderSchema = mongoose.Schema({
   customer: String,
   isDelivered: { type: Boolean, default: false },
   dateCreated: Date,
+  PaymentStatus: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Order", OrderSchema);

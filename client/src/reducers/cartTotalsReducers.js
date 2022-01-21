@@ -5,21 +5,28 @@ function cartTotalsReducers(state = { total: 0, quantity: 0 }, action) {
   switch (action.type) {
     //deletes item if it exists or creates one if it doesnot
     case "INITIALIZE-TOTALS":
-      const id = action.payload.id;
+      const variantId = action.payload.variantId;
       const price = action.payload.price;
+      const id = action.payload.id;
+      const color = action.payload.color;
+      const size = action.payload.size;
 
-    
-
-      if (state[id]) {
-        console.log('122')
-        state.total = state.total - state[id].total;
-        state.quantity = state.quantity - state[id].quantity;
-        delete state[id];
+      if (state[variantId]) {
+        console.log("122");
+        state.total = state.total - state[variantId].total;
+        state.quantity = state.quantity - state[variantId].quantity;
+        delete state[variantId];
         return { ...state };
-
       } else {
         console.log("running");
-        state[id] = { total: price, price: price, quantity: 1 };
+        state[variantId] = {
+          total: price,
+          price: price,
+          quantity: 1,
+          id: id,
+          color,
+          size,
+        };
 
         Object.keys(state).forEach((key) => {
           if (key === "total" || key === "quantity" || key === "undefined")
@@ -35,13 +42,13 @@ function cartTotalsReducers(state = { total: 0, quantity: 0 }, action) {
       }
 
     case "UPDATE-TOTALS":
-      let _id = action.payload.id;
+      let variantid = action.payload.id;
 
       if (action.payload.action === "increment") {
-        state[_id].quantity += 1;
+        state[variantid].quantity += 1;
         state.quantity += 1;
       } else if (action.payload.action === "decrement") {
-        state[_id].quantity -= 1;
+        state[variantid].quantity -= 1;
         state.quantity -= 1;
       }
 
@@ -55,6 +62,9 @@ function cartTotalsReducers(state = { total: 0, quantity: 0 }, action) {
       state.total = finalTotal;
 
       return { ...state };
+
+    case "CLEAR-TOTALS":
+      return { total: 0, quantity: 0 };
 
     default:
       return state;

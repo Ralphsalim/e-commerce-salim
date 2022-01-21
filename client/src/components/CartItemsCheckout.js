@@ -21,6 +21,7 @@ const CartItemsCheckout = (props) => {
         <ComponentCard
           text="Login"
           style={{ margin: "20px 0px 20px 0px", height: "45px" }}
+          link="/login"
         ></ComponentCard>
       ) : null}
       <TextValue
@@ -49,14 +50,16 @@ const CartItemsCheckout = (props) => {
           style={{ marginTop: "40px", height: "45px" }}
         ></ComponentCard>
       ) : (
-        <ComponentCard
-          text={page === "checkout?" ? "Thanks" : "Checkout"}
-          style={{
-            marginTop: "40px",
-            height: "45px",
-          }}
-          link={page === "checkout" ? null : "checkout"}
-        ></ComponentCard>
+        !isCartEmpty && (
+          <ComponentCard
+            text={page === "checkout?" ? "Thanks" : "Checkout"}
+            style={{
+              marginTop: "40px",
+              height: "45px",
+            }}
+            link={page === "checkout" ? null : "checkout"}
+          ></ComponentCard>
+        )
       )}
     </div>
   );

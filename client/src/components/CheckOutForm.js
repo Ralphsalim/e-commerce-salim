@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   PaymentElement,
   useElements,
@@ -8,11 +8,15 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const CheckoutForm = (props) => {
-  const { orderId } = props;
   const currentOrder = useSelector((state) => state.currentOrder);
-
+  const user = useSelector((state) => state.user);
   const stripe = useStripe();
+  const totals = useSelector((state) => state.totals);
   const elements = useElements();
+  const [orderId, setOrderId] = useState("");
+  const client_Secret = useSelector((state) => state.client_Secret);
+  const paymentIntentId = useSelector((state) => state.paymentIntentId);
+  const cart = useSelector((state) => state.cart);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,23 +24,35 @@ const CheckoutForm = (props) => {
     if (!stripe || !elements) return;
 
     //posts the order to the server
+    let userId = "";
+    if (user) {
+      userId = user._id;
+    }
 
-    const order = {
-      personalInfo: currentOrder.personalInfo,
-      billingInfo: currentOrder.billingInfo,
-      deliveryInfo: currentOrder.deliveryInfo,
-    };
+    const cartProducts = Object.keys(cart);
 
-    axios.post("http://localhost:5000/api/v1/orders", order, {
-      params: { id: orderId },
-    });
+    
+     const response = await axios.patch(
+       "api/v1/checkout-session",
+      // { currentOrder, cartProducts, totals },
+      {currentOrder},
+       {
+         params: { paymentIntentId, orderId: currentOrder.orderId, userId },
+     }
+    );
+
+    // //the order id will be used to query the created order
+    // //when the payment fails and user retries payment
+    // setOrderId(response.data.orderId);
 
     const result = await stripe.confirmPayment({
       elements,
-      confirmParams: { return_url: "https://e-commerce-salim.herokuapp.com/" },
+      confirmParams: { return_url: "http://localhost:3000" },
     });
 
-    if (result.error) console.log(result.error.message);
+    if (result.error) {
+      console.log(result.error.message);
+    }
   };
 
   //makes the component collapsable

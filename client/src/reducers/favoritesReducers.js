@@ -2,7 +2,8 @@ const favoritesreducer = (state = new Map(), action) => {
   const payload = action.payload;
   switch (action.type) {
     case "ADD-FAVORITE":
-      return { ...state, [payload._id]: payload };
+
+      return { ...state, [payload.variantId]: payload };
 
     case "DELETE-FAVORITE":
       delete state[payload];
