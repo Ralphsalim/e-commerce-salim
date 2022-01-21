@@ -7,7 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setoverlay } from "../actions";
 import SuccessMessage from "../components/SuccessMessage";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { setsuccessmessage } from "../actions";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -58,7 +61,7 @@ function Navbar() {
             marginLeft: "20px",
           }}
         >
-          Sumaya{" "}
+          SM{" "}
         </Link>
       </div>
       <div className="navbar-right">
@@ -66,18 +69,24 @@ function Navbar() {
           {totals.quantity ? (
             <span style={styles}>{totals.quantity}</span>
           ) : null}
-          <ShoppingBagIcon sx={{ fontSize: "30px" }}></ShoppingBagIcon>
+          <ShoppingBagOutlinedIcon
+            sx={{ fontSize: "28px" }}
+          ></ShoppingBagOutlinedIcon>
         </span>
 
         <span onClick={() => handleClick("FAVORITE")}>
           {favoritesLength ? (
             <span style={styles}>{favoritesLength}</span>
           ) : null}
-          <FavoriteIcon sx={{ fontSize: "30px" }}></FavoriteIcon>
+          <FavoriteBorderOutlinedIcon
+            sx={{ fontSize: "28px" }}
+          ></FavoriteBorderOutlinedIcon>
         </span>
 
         <span onClick={() => handleClick("ACCOUNT")}>
-          <PersonIcon sx={{ fontSize: "35px" }}></PersonIcon>
+          <PersonOutlineOutlinedIcon
+            sx={{ fontSize: "35px" }}
+          ></PersonOutlineOutlinedIcon>
         </span>
       </div>
 
@@ -102,7 +111,7 @@ function Navbar() {
 
 const styles = {
   position: "absolute",
-  top: "-23px",
+  top: "-20px",
   left: "20px",
   height: "20px",
   backgroundColor: "black",

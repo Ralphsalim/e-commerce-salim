@@ -28,6 +28,8 @@ body {
   margin-right: 35px;
   cursor: pointer;
   position: relative;
+  margin: 0px 5px 0px 8px;
+
 }
 
 /* Login */
@@ -62,7 +64,7 @@ button,
 
 .login button {
   color: white;
-  background-color: black;
+  background-color: #202122;
   padding: 0px 10px 0px 10px;
   max-width: 310px;
 }
@@ -411,7 +413,7 @@ button {
 }
 
 .personal-info-form > div button {
-  background-color: black;
+  background-color: #202122;
   color: white;
 }
 

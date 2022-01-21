@@ -226,7 +226,7 @@ function ProductPage(props) {
 
                       <section className="productpage-form-info">
                         <span>
-                          {priceOfvariant ? `${priceOfvariant} kr` : ""}
+                          {priceOfvariant ? `${priceOfvariant} :-` : ""}
                         </span>
                         <span>{selectedColor}</span>
                         <span>{product.name}</span>
@@ -271,9 +271,9 @@ function ProductPage(props) {
 
                         <button
                           onClick={(e) => handleSubmit(e)}
-                          style={{ backgroundColor: "black", color: "white" }}
+                          style={{ backgroundColor: "#202122", color: "white" }}
                         >
-                          Add Product To Cart
+                          Add To Cart
                         </button>
                       </section>
                     </form>
@@ -301,7 +301,7 @@ function ProductPage(props) {
               ></ProductLike>
 
               <section className="productpage-form-info">
-                <span>{priceOfvariant ? `${priceOfvariant} kr` : ""}</span>
+                <span>{priceOfvariant ? `${priceOfvariant} :-` : ""}</span>
                 <span>{selectedColor}</span>
                 <span>{product.name}</span>
               </section>
@@ -309,7 +309,7 @@ function ProductPage(props) {
               <section className="productpage-form-image">
                 {product.variants.map((variant) => {
                   const border =
-                    selectedColor === variant.color ? "1px solid black" : "";
+                    selectedColor === variant.color ? "0.5px solid black" : "";
                   return (
                     <img
                       src={variant.images[0]}
@@ -354,11 +354,9 @@ function ProductPage(props) {
 
                 <button
                   onClick={(e) => handleSubmit(e)}
-                  style={{ backgroundColor: "black", color: "white" }}
+                  style={{ backgroundColor: "#202122", color: "white" }}
                 >
-                  {cart[product._id + "-" + selectedColor]
-                    ? "Product Added To Cart"
-                    : "Add Product To Cart"}
+                Add To Cart
                 </button>
               </section>
             </form>

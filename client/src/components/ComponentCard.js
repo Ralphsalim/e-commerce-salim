@@ -8,7 +8,7 @@ export const ComponentCard = (props) => {
     display: "flex",
     justifyContent: " center",
     alignItems: "center",
-    backgroundColor: "black",
+    backgroundColor: "#202122",
     color: "white",
     cursor: "pointer",
     fontSize: "18px",

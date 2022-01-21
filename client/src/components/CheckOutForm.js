@@ -47,7 +47,7 @@ const CheckoutForm = (props) => {
 
     const result = await stripe.confirmPayment({
       elements,
-      confirmParams: { return_url: "http://localhost:3000" },
+      confirmParams: { return_url: "https://e-commerce-salim.herokuapp.com/" },
     });
 
     if (result.error) {
