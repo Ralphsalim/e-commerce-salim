@@ -10,6 +10,7 @@ const Product = require("./../models/Product");
 //creates also an order
 
 const createCheckoutSession = async (req, res) => {
+  console.log("creating session ");
   const cart = req.body.items;
   const orderId = req.body.orderId;
 

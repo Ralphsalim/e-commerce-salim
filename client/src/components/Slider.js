@@ -1,4 +1,5 @@
 import React from "react";
+import slider from '../images/slider.jpg'
 
 function Slider(props) {
   const { children } = props;
@@ -14,7 +15,7 @@ function Slider(props) {
       }}
     >
       <img
-        src="https://freekaamaal.com/blog/wp-content/uploads/2017/01/Love-Couple-Romance-Bridge-Photography1.jpg"
+        src={slider}
         alt=""
         style={{
           height: "100%",
@@ -32,7 +33,6 @@ function Slider(props) {
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          
         }}
       >
         {children}

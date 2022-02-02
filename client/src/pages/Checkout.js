@@ -11,6 +11,7 @@ import PersonalInfo from "../components/PersonalInfo";
 import BillingInfo from "../components/BillingInfo";
 import CartItemsCheckout from "../components/CartItemsCheckout";
 import { setclientsecret, setpaymentintentid, updateOrder } from "../actions";
+import Footer from "../components/Footer";
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -58,10 +59,10 @@ function Checkout() {
   };
 
   //creates a payment intent if one doesnot exist ie if the client secret is falsey
-  //will only run if there is no payment intent
+  //will only run if there is no order that has already been created
   //
   useEffect(() => {
-    if (Object.keys(cart).length) {
+    if (Object.keys(cart).length && !client_Secret) {
       checkout();
     }
   }, []);
@@ -69,7 +70,7 @@ function Checkout() {
   return (
     <div className="Checkout">
       <Navbar></Navbar>
-      <div className="Checkout-content" style={{ marginTop:'80px'}}>
+      <div className="Checkout-content" style={{ marginTop: "80px" }}>
         <div className="checkout-left">
           <PersonalInfo></PersonalInfo>
           <BillingInfo></BillingInfo>
@@ -83,49 +84,9 @@ function Checkout() {
           <CartItemsCheckout page={page}></CartItemsCheckout>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
 
 export default Checkout;
-
-// function Checkout() {
-//   const totals = useSelector((state) => state.totals);
-
-//   return (
-//     <Elements stripe={stripePromise} options={getClientSecret(totals)}>
-//       <CheckoutForm></CheckoutForm>
-//     </Elements>
-//   );
-// }
-
-// const getClientSecret = async (totals) => {
-//   const items = checkout(totals);
-//   const { data: options } = await axios.post(
-//     "http://localhost:7000/api/v1/create-checkout-session",
-//     items
-//   );
-//   return options;
-// };
-
-// const checkout = (totals) => {
-//   let items = {};
-
-//   //makes sure that only valid ids exist
-//   Object.keys(totals).forEach((key) => {
-//     if (
-//       key !== "total" &&
-//       key !== "quantity" &&
-//       key !== "undefined" &&
-//       key !== "null"
-//     ) {
-//       return (items = {
-//         ...items,
-//         [key]: { quantity: totals[key].quantity },
-//       });
-//     }
-//   });
-//   return items;
-// };
-
-// export default Checkout;

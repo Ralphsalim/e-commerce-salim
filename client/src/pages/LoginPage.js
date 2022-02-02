@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../components/Footer";
 import Login from "../components/Login";
 import Navbar from "../components/Navbar";
 
@@ -9,6 +10,7 @@ function LoginPage() {
       <div className="loginpage-content">
         <Login style={{ marginTop: "40px" }}></Login>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

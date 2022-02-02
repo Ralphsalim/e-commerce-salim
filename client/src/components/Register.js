@@ -43,8 +43,11 @@ const Register = (props) => {
   };
   return (
     <section
-      className="personal-info login "
-      style={{ maxHeight: "none", borderRadius: "none" }}
+      className="login "
+      style={{
+        maxHeight: "none",
+        backgroundColor: "white",
+      }}
     >
       <div className="login-text">Register</div>
 

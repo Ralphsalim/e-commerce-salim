@@ -3,12 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Cart from "./Cart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { clearcart, cleartotals, setclientsecret } from "../actions";
 import { ComponentCard } from "./ComponentCard";
-import ProductLike from "./ProductLike";
 import CartItemsCheckout from "./CartItemsCheckout";
 
 function CartItems() {
@@ -90,11 +87,7 @@ function CartItems() {
             <span style={{ fontSize: "25px", fontWeight: "bold" }}>
               Cart is Empty{" "}
             </span>
-          ) : // <ComponentCard
-          //   text="Cart Is Empty"
-          //   style={{ padding: "0px 30px 0px 30px", maxWidth: "400px" }}
-          // ></ComponentCard>
-          null}
+          ) : null}
         </div>
         <CartItemsCheckout page="home"></CartItemsCheckout>
       </div>

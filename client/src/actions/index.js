@@ -90,3 +90,9 @@ export const setsuccessmessage = (o) => {
 export const setcategoryproducts = (o) => {
   return { type: "SET-CATEGORY-PRODUCTS", payload: o };
 };
+
+//purchases
+
+export const setpurchases = (o) => {
+  return { type: "SET-PURCHASES", payload: o };
+};

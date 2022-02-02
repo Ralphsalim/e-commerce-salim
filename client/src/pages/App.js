@@ -13,6 +13,7 @@ import Favorite from "@mui/icons-material/Favorite";
 import CartItems from "../components/CartItems";
 import FavoriteItems from "../components/FavoriteItems";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -107,6 +108,7 @@ function App() {
           }}
         ></OverlayCard>
       ) : null}
+      <Footer></Footer>
     </div>
   );
 }

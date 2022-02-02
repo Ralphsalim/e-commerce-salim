@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { deleteoverlay } from "../actions";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Register from "../components/Register";
 function RegisterPage() {
@@ -20,6 +21,7 @@ function RegisterPage() {
       >
         <Register></Register>
       </div>
+      <Footer></Footer>
     </div>
   );
 }

@@ -15,7 +15,6 @@ function Cart(props) {
   const dispatch = useDispatch();
   const totals = useSelector((state) => state.totals);
 
-  console.log(productVariant);
 
   //deletes item from the cart in store using the productVariant id
   //also deletes it from the totals in store

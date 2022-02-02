@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setloginredirect, setUser } from "../actions";
 import { ComponentCard } from "../components/ComponentCard";
+import Footer from "../components/Footer";
 import Login from "../components/Login";
 import Navbar from "../components/Navbar";
 import PersonalInfo from "../components/PersonalInfo";
+import PurchaseItems from "./PurchaseItems";
 
 function MyPage() {
   const user = useSelector((state) => state.user);
@@ -73,17 +75,16 @@ function MyPage() {
   }, []);
 
   useEffect(() => {
-    
-    if (window.innerWidth < 700) setisMobileDevice(()=>true);
+    if (window.innerWidth < 700) setisMobileDevice(() => true);
     else {
-      setisMobileDevice(()=>false);
+      setisMobileDevice(() => false);
     }
   }, [viewWidth]);
 
   //display is hidden by default on mobile devices
   useEffect(() => {
-    if (isMobileDevice) setshowDisplay(()=>false);
-    else setshowDisplay(()=>true)
+    if (isMobileDevice) setshowDisplay(() => false);
+    else setshowDisplay(() => true);
   }, [isMobileDevice]);
 
   const goBack = () => {
@@ -110,7 +111,7 @@ function MyPage() {
   return (
     <div className="mypage">
       <Navbar></Navbar>
-      <div className="mypage-content" style={{marginTop:'80px'}}>
+      <div className="mypage-content" style={{ marginTop: "80px" }}>
         {showMenu && (
           <section
             className="mypage-content-left"
@@ -125,6 +126,7 @@ function MyPage() {
             <ComponentCard
               text="Purchases"
               style={stylesButton}
+              onClick={() => handleClick("purchases")}
             ></ComponentCard>
             <ComponentCard
               text="Address"
@@ -155,9 +157,7 @@ function MyPage() {
               ></PersonalInfoMyPage>
             ) : null}
 
-            {view === "purchases" ? (
-              <PersonalInfoMyPage></PersonalInfoMyPage>
-            ) : null}
+            {view === "purchases" ? <PurchaseItems></PurchaseItems> : null}
 
             {view === "address" ? (
               <BillingInfoMyPage
@@ -167,6 +167,8 @@ function MyPage() {
           </section>
         )}{" "}
       </div>
+
+      <Footer></Footer>
     </div>
   );
 }

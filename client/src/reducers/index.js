@@ -14,6 +14,7 @@ import loginRedirectReducer from "./loginRedirectReducer";
 import paymentIntentReducer from "./paymentIntentReducer";
 import statusMessages from "./statusMessages";
 import CategoryProducts from "./CategoryProducts";
+import purchasesreducer from "./purchasesReducer";
 
 const allReducers = combineReducers({
   user: userReducer,
@@ -29,6 +30,7 @@ const allReducers = combineReducers({
   paymentIntentId: paymentIntentReducer,
   statusMessages: statusMessages,
   categoryProducts: CategoryProducts,
+  purchases: purchasesreducer,
 });
 
 export default allReducers;
