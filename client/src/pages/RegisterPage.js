@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { deleteoverlay } from "../actions";
 import Navbar from "../components/Navbar";
-import Register from '../components/Register'
+import Register from "../components/Register";
 function RegisterPage() {
+
+  const dispatch = useDispatch();
+  //removes the overlay on page reload
+  useEffect(() => {
+    dispatch(deleteoverlay());
+  }, []);
+
   return (
-    <div>
+    <div style={{ backgroundColor: "whitesmoke" }}>
       <Navbar></Navbar>
-      <div className="registerpage-content">
+      <div
+        className="registerpage-content"
+        style={{ marginTop: "80px", display: "flex", justifyContent: "center" }}
+      >
         <Register></Register>
       </div>
     </div>

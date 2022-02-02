@@ -1,6 +1,13 @@
 * {
   padding: 0px;
   margin: 0px;
+  -ms-overflow-style: "none";
+  scrollbar-width: "none";
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 body input {
@@ -29,7 +36,6 @@ body {
   cursor: pointer;
   position: relative;
   margin: 0px 5px 0px 8px;
-
 }
 
 /* Login */
@@ -45,6 +51,12 @@ body {
   max-width: 500px;
   margin: 10px 10px 10px 10px;
   padding: 0px 0px 20px 0px;
+}
+
+.login-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login > div {

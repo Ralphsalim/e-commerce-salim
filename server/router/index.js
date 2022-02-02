@@ -1,7 +1,7 @@
 const path = require("path");
 const LoginUser = require("../controllers/login");
 const { createOrder } = require("../controllers/orders");
-const { getAllProducts, createProducts } = require("../controllers/products");
+const { getAllProducts, createProducts, getProduct } = require("../controllers/products");
 const {
   createCheckoutSession, updateCheckoutSession,
   
@@ -12,6 +12,7 @@ const { createUser, patchUser } = require("../controllers/user");
 const router = require("express").Router();
 
 router.route("/products").get(getAllProducts).post(createProducts);
+router.route('/products/:id').get(getProduct)
 router.route("/checkout-session").post(createCheckoutSession).patch(updateCheckoutSession);
 router.route("/login").post(LoginUser);
 router.route("/user").post(createUser).patch(patchUser);

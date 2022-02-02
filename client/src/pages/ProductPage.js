@@ -6,6 +6,7 @@ import {
   addcartitem,
   deleteoverlay,
   initializecarttotals,
+  setproducts,
   setsuccessmessage,
 } from "../actions";
 import CartItems, { TextValue } from "../components/CartItems";
@@ -15,12 +16,13 @@ import Login from "../components/Login";
 import OverlayCard from "../components/OverlayCard";
 import ProductLike from "../components/ProductLike";
 import productsreducer from "../reducers/productsReducer";
+import axios from "axios";
 
 function ProductPage(props) {
   let { pathname, state } = useLocation();
   const dispatch = useDispatch();
-  const { product, color, productVariant } = state;
-
+  const [product, setProduct] = useState(null);
+  const [color, setColor] = useState("");
   const [selectedImages, setselectedImages] = useState([]);
   const [sizeOptions, setSizeOptions] = useState([]);
   const [selectedSize, setSelectedSize] = useState("");
@@ -32,16 +34,39 @@ function ProductPage(props) {
   const cart = useSelector((state) => state.cart);
   const overlay = useSelector((state) => state.overlay);
   const statusMessages = useSelector((state) => state.statusMessages);
-
   const [successMessage, setsuccessMessage] = useState("");
-
   const [viewWidth, setViewWidth] = useState(window.innerWidth);
-
   const [favoriteVariant, setfavoriteVariant] = useState({}); //the product that will be added to
 
   const setSize = () => {
     setViewWidth(window.innerWidth);
   };
+
+  //checks for the product uif it is not undefined
+  //gets a product from the data base if one doesnot exist
+
+  useEffect(() => {
+    try {
+      const { product, color, productVariant } = state;
+      setColor(color);
+      console.log(product);
+      setProduct(product);
+    } catch (error) {
+      const temp = pathname.split("/products/");
+      const id = temp[1];
+      const url = "/api/v1/products/" + id;
+      axios.get(url).then((res) => {
+        console.log(res.data.product);
+        const product = res.data.product;
+        setColor(() => {
+          console.log(product.variants[0].color);
+          return product.variants[0].color;
+        });
+        setProduct(product);
+        dispatch(setproducts({ [id]: product }));
+      });
+    }
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", setSize);
@@ -107,6 +132,8 @@ function ProductPage(props) {
   //will rerender when the product chenges
 
   useEffect(() => {
+    if (!product) return;
+    if (!color) return;
     handleClick(color);
     dispatch(deleteoverlay());
   }, [product]);
@@ -209,89 +236,93 @@ function ProductPage(props) {
       >
         {/* <SuccessMessage></SuccessMessage> */}
         <div className="productpage-left">
-          {selectedImages.map((image, index) => {
-            return (
-              <>
-                {index === 1 && viewWidth <= 768 ? (
-                  <div className="productpage-right">
-                    <form action="" className="productpage-form">
-                      <ProductLike
-                        productVariant={favoriteVariant}
-                        style={{
-                          position: "absolute",
-                          top: " 30px",
-                          right: "30px",
-                        }}
-                      ></ProductLike>
+          {selectedImages &&
+            selectedImages.map((image, index) => {
+              return (
+                <>
+                  {index === 1 && viewWidth <= 768 && product ? (
+                    <div className="productpage-right">
+                      <form action="" className="productpage-form">
+                        <ProductLike
+                          productVariant={favoriteVariant}
+                          style={{
+                            position: "absolute",
+                            top: " 30px",
+                            right: "30px",
+                          }}
+                        ></ProductLike>
 
-                      <section className="productpage-form-info">
-                        <span>
-                          {priceOfvariant ? `${priceOfvariant} :-` : ""}
-                        </span>
-                        <span>{selectedColor}</span>
-                        <span>{product.name}</span>
-                      </section>
+                        <section className="productpage-form-info">
+                          <span>
+                            {priceOfvariant ? `${priceOfvariant} :-` : ""}
+                          </span>
+                          <span>{selectedColor}</span>
+                          <span>{product.name}</span>
+                        </section>
 
-                      <section className="productpage-form-image">
-                        {product.variants.map((variant) => {
-                          const border =
-                            selectedColor === variant.color
-                              ? "1px solid black"
-                              : "";
-                          return (
-                            <img
-                              src={variant.images[0]}
-                              alt=""
-                              key={variant.color}
-                              style={{
-                                border: border,
-                              }}
-                              onClick={() => handleClick(variant.color)}
-                            />
-                          );
-                        })}
-                      </section>
-
-                      <section className="productpage-form-bottom">
-                        <select
-                          name="size-options"
-                          onChange={(e) => handleChange(e)}
-                          value={selectedSize}
-                        >
-                          <option value="">Choose A Size </option>
-                          {sizeOptions.map((el) => {
+                        <section className="productpage-form-image">
+                          {product.variants.map((variant) => {
+                            const border =
+                              selectedColor === variant.color
+                                ? "1px solid black"
+                                : "";
                             return (
-                              <option value={el.size} key={el.size}>
-                                {el.size}
-                              </option>
+                              <img
+                                src={variant.images[0]}
+                                alt=""
+                                key={variant.color}
+                                style={{
+                                  border: border,
+                                }}
+                                onClick={() => handleClick(variant.color)}
+                              />
                             );
                           })}
-                        </select>
-                        <br />
+                        </section>
 
-                        <button
-                          onClick={(e) => handleSubmit(e)}
-                          style={{ backgroundColor: "#202122", color: "white" }}
-                        >
-                          Add To Cart
-                        </button>
-                      </section>
-                    </form>
-                  </div>
-                ) : (
-                  ""
-                )}
-                <img
-                  src={image}
-                  alt=""
-                  key={index}
-                  style={{ marginBottom: "10px" }}
-                />
-              </>
-            );
-          })}
+                        <section className="productpage-form-bottom">
+                          <select
+                            name="size-options"
+                            onChange={(e) => handleChange(e)}
+                            value={selectedSize}
+                          >
+                            <option value="">Choose A Size </option>
+                            {sizeOptions.map((el) => {
+                              return (
+                                <option value={el.size} key={el.size}>
+                                  {el.size}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <br />
+
+                          <button
+                            onClick={(e) => handleSubmit(e)}
+                            style={{
+                              backgroundColor: "#202122",
+                              color: "white",
+                            }}
+                          >
+                            Add To Cart
+                          </button>
+                        </section>
+                      </form>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <img
+                    src={image}
+                    alt=""
+                    key={index}
+                    style={{ marginBottom: "10px" }}
+                  />
+                </>
+              );
+            })}
         </div>
-        {viewWidth >= 768 ? (
+        {viewWidth >= 768 && product ? (
           <div className="productpage-right">
             <form action="" className="productpage-form">
               <ProductLike
@@ -356,7 +387,7 @@ function ProductPage(props) {
                   onClick={(e) => handleSubmit(e)}
                   style={{ backgroundColor: "#202122", color: "white" }}
                 >
-                Add To Cart
+                  Add To Cart
                 </button>
               </section>
             </form>

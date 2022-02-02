@@ -1,7 +1,8 @@
 function overlayReducer(state = null, action) {
   switch (action.type) {
     case "SET-OVERLAY":
-      return action.payload;
+      if (action.payload === state) return null;
+      else return action.payload;
 
     case "DELETE-OVERLAY":
       return null;

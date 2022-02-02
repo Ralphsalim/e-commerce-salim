@@ -1,7 +1,7 @@
-const productsreducer = (state = {}, action) => {
+const productsreducer = (state = null, action) => {
   switch (action.type) {
     case "SET-PRODUCTS":
-      return action.payload;
+      return {...state, ...action.payload};
 
     default:
       return state;

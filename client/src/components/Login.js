@@ -8,8 +8,7 @@ import {
   setUser,
 } from "../actions";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { TenMp } from "@mui/icons-material";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login(props) {
   const { style } = props;
@@ -61,13 +60,7 @@ function Login(props) {
       <div className="login-text">Login</div>
       <div className="login-form">
         <form onSubmit={handleSubmit}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <div className="login-div">
             <input
               type="email"
               name="email"
@@ -79,13 +72,7 @@ function Login(props) {
             <span>{emailErrors}</span>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <div className="login-div">
             <input
               type="password"
               name="password"
@@ -96,14 +83,15 @@ function Login(props) {
             />
             <span>{passwordErrors}</span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
+          <div className="login-div">
             <button type="submit">Submit</button>
+          </div>
+
+          <div className="login-div">
+            <Link to="/Register" style={{ color: "blue", textAlign: "center" }}>
+              {" "}
+              Go To Registration Page{" "}
+            </Link>
           </div>
         </form>
       </div>

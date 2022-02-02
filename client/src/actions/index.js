@@ -84,3 +84,9 @@ export const setpaymentintentid = (o) => {
 export const setsuccessmessage = (o) => {
   return { type: "SET-SUCCESS-MESSAGE", payload: o };
 };
+
+//category products
+
+export const setcategoryproducts = (o) => {
+  return { type: "SET-CATEGORY-PRODUCTS", payload: o };
+};

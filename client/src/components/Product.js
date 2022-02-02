@@ -153,7 +153,7 @@ function Product(props) {
           style={{ position: "absolute", bottom: " 10px", right: "10px" }}
         ></ProductLike>
         <Link
-          to={`/${productVariant._id}`}
+          to={`/products/${productVariant._id}`}
           state={{
             product,
             color: productVariant.color,

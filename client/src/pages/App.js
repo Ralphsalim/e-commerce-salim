@@ -7,19 +7,28 @@ import Navbar from "../components/Navbar";
 import Product from "../components/Product";
 import Cart from "../components/Cart";
 import Checkout from "./Checkout";
-import { setproducts } from "../actions";
+import { setproducts, setcategoryproducts } from "../actions";
 import OverlayCard from "../components/OverlayCard";
 import Favorite from "@mui/icons-material/Favorite";
 import CartItems from "../components/CartItems";
 import FavoriteItems from "../components/FavoriteItems";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
+  // const products = useSelector((state) => state.products);
   const overlay = useSelector((state) => state.overlay);
   const [viewWidth, setviewWidth] = useState(window.innerWidth);
   const [viewheight, setViewheight] = useState(window.innerHeight);
+  const { state } = useLocation(); //object from the category component
+
+  const products = useSelector((state) => state.products);
+  console.log(window.location);
+
+  const category = state.category;
+  const categoryProducts = useSelector(
+    (state) => state.categoryProducts[category]
+  );
 
   const setWidth = () => {
     setViewheight(window.innerHeight);
@@ -34,10 +43,16 @@ function App() {
 
   //retrieves products from data base
   useEffect(() => {
-    axios.get("/api/v1/products").then((res) => {
-      console.log(res.data);
-      dispatch(setproducts(res.data));
-    });
+    //products only fetched once
+    if (category && categoryProducts === undefined) {
+      console.log("getting products", category);
+      axios.get("/api/v1/products", { params: { category } }).then((res) => {
+        dispatch(
+          setcategoryproducts({ category: category, products: res.data })
+        );
+        dispatch(setproducts(res.data));
+      });
+    }
   }, []);
 
   return (
@@ -56,8 +71,8 @@ function App() {
       <div className="app-content">
         <div className="app-content-left"></div>
         <div className="app-content-center">
-          {Object.keys(products)
-            ? Object.values(products).map((product) => {
+          {categoryProducts
+            ? Object.values(categoryProducts).map((product) => {
                 const colorOptions = product.variants.map((el) => el.color);
                 const productVariant = {
                   name: product.name,
@@ -92,7 +107,6 @@ function App() {
           }}
         ></OverlayCard>
       ) : null}
-      
     </div>
   );
 }

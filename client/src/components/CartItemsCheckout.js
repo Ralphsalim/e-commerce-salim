@@ -57,7 +57,7 @@ const CartItemsCheckout = (props) => {
               marginTop: "40px",
               height: "45px",
             }}
-            link={page === "checkout" ? null : "checkout"}
+            link={page === "checkout" ? null : "/checkout"}
           ></ComponentCard>
         )
       )}

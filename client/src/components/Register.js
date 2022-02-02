@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -38,94 +38,99 @@ const Register = (props) => {
             setregistrationError(res.data.message);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => setregistrationError(err));
     }
   };
   return (
-    <section className="personal-info">
-      <div
-        style={{
-          fontSize: "25px",
-          margin: "0px 0px 10px 0px",
-          paddingTop: "20px",
-        }}
-      >
-        Register
-      </div>
+    <section
+      className="personal-info login "
+      style={{ maxHeight: "none", borderRadius: "none" }}
+    >
+      <div className="login-text">Register</div>
 
       {registrationError && (
-        <div style={{ color: "red", textAlign:'center'}}>{registrationError}</div>
+        <div style={{ color: "red", textAlign: "center" }}>
+          <span> {registrationError}</span>
+        </div>
       )}
+      <div className="login-form">
+        <form onSubmit={handleSubmit}>
+          <div className="login-div">
+            <input
+              type="text"
+              name="first-name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+              placeholder="Firstname"
+            />
+          </div>
+          <div className="login-div">
+            <input
+              type="text"
+              name="last-name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+              placeholder="Lastname"
+            />
+          </div>
+          <div className="login-div">
+            <input
+              type="date"
+              name="birth-date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              required
+              placeholder="Birthday"
+            />{" "}
+          </div>
 
-      <form className="personal-info-form" onSubmit={handleSubmit}>
-        <div>
-          <span>First name</span>
-          <input
-            type="text"
-            name="first-name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <span>Last name</span>
-          <input
-            type="text"
-            name="first-name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <span>Birth date</span>
-          <input
-            type="date"
-            name="birth-date"
-            value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
-            required
-          />{" "}
-        </div>
+          <div className="login-div">
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email"
+            />{" "}
+          </div>
 
-        <div>
-          <span>Email</span>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />{" "}
-        </div>
+          <div className="login-div">
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="Password"
+            />{" "}
+          </div>
 
-        <div>
-          <span>Password</span>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />{" "}
-        </div>
+          <div className="login-div">
+            <input
+              type="tel"
+              name="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              required
+              placeholder="Phone number"
+            />{" "}
+          </div>
 
-        <div>
-          <span>Phone Number</span>
-          <input
-            type="tel"
-            name="tel"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />{" "}
-        </div>
+          <div className="login-div">
+            <button type="submit">Register</button>
+          </div>
 
-        <div className="personal-info-form-submit">
-          <button type="submit">Save</button>
-        </div>
-      </form>
+          <div className="login-div">
+            <Link to="/login" style={{ color: "blue" }}>
+              {" "}
+              Go To Login Page{" "}
+            </Link>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };

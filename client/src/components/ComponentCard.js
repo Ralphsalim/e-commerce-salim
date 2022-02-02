@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 
 export const ComponentCard = (props) => {
-  const { link, text, component, style, reverse, onClick} = props;
+  const { link, text, component, style, reverse, onClick, state } = props;
   let reverseOrder = reverse || false;
- 
+
   let styles = {
     display: "flex",
     justifyContent: " center",
@@ -17,11 +17,20 @@ export const ComponentCard = (props) => {
   styles = { ...styles, ...style };
 
   return (
-    <section style={styles} onClick={onClick} >
+    <section style={styles} onClick={onClick}>
       {link ? (
         <Link
           to={link}
-          style={{ display: "flex", color: "white", textDecoration: "none" }}
+          state={state ? state : {}}
+          style={{
+            display: "flex",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+          }}
         >
           {reverseOrder ? text : null} {component}
           {reverseOrder ? null : text}

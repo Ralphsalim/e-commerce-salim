@@ -1,8 +1,17 @@
 const { createIndexes } = require("../models/Product");
 const Product = require("../models/Product");
 
+const getProduct = async (req, res) => {
+  const id = req.params.id;
+  const product = await Product.findById(id);
+  res.status(200).json({ product });
+};
+
 const getAllProducts = async (req, res) => {
-  const products = await Product.find({});
+  console.log(req.query);
+  console.log("getting");
+  const category = req.query.category;
+  const products = await Product.find({ category });
 
   const result = {};
   products.forEach((product) => {
@@ -26,4 +35,4 @@ const createProducts = async (req, res) => {
   }
 };
 
-module.exports = { getAllProducts, createProducts };
+module.exports = { getAllProducts, createProducts, getProduct };

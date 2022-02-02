@@ -18,6 +18,7 @@ function CartItems() {
   const totals = useSelector((state) => state.totals);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   //determines if cart is empty depending on the keys in cart object
   //iscartEmpty, used to toggle TextCard component(cart is Empty)
   useEffect(() => {
@@ -25,6 +26,8 @@ function CartItems() {
     else setisCartEmpty(true);
   }, [cart]);
 
+  //resets the items in cart to null
+  //resets the totals to null
   const handleClick = () => {
     dispatch(cleartotals());
     dispatch(clearcart());
